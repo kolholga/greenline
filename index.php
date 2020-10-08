@@ -1,3 +1,28 @@
+<?php
+
+//создали подключение
+$link = mysqli_connect('localhost', 'root', '', 'greenline');
+
+if($link === false){
+
+    echo 'Произошла ошибка!' . PHP_EOL; //PHP_EOL -перенос строки
+    echo 'Код ошибки ' . mysqli_connect_errno() . PHP_EOL; //mysqli_connect_errno - выводит номер ошибки
+    echo 'Текст ошибки' . mysqli_connect_error() . PHP_EOL; //mysqli_connect_error() - выводит ошибку
+    die(); //убиваем скрипт
+    
+}
+
+mysqli_set_charset($link, "utf8");
+
+$res = mysqli_query($link, "SELECT * FROM `category` ORDER BY `title` ASC"); // ORDER BY `title` ASC - сортировать в прямом порядке
+$arCategory = mysqli_fetch_all($res, MYSQL_ASSOC); 
+
+/* echo '<pre>';
+print_r($arCategory);
+echo '</pre>'; */
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,10 +86,11 @@
           <h2 class="star"><span>Категории</span></h2>
           <div class="clr"></div>
           <ul class="sb_menu">
-            <li><a href="#">Финансы</a></li>
-            <li><a href="#">Интернет</a></li>
-            <li><a href="#">Технологии</a></li>
-            <li><a href="#">Медицина</a></li>
+
+            <?foreach($arCategory as $category):?>
+            <li><a href="#"><?=$category['title'];?></a></li>
+            <?endforeach;?>
+            
           </ul>
         </div>
       </div>
