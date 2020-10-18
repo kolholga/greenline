@@ -1,3 +1,6 @@
+<?php
+/* $arSupport - список вопросов-ответов */
+?>
 
  <div class="article">
           <h2><span>Support to</span> Company Name</h2>
@@ -6,35 +9,15 @@
           <p><strong>Lorem ipsum dolor sit amet</strong></p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget bibendum tellus. Nunc vel imperdiet tellus. Mauris ornare aliquam urna, accumsan bibendum eros auctor ac.</p>
           <ul>
-
-
-
-            <li class="block-question">
-              <p class="question">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p class="ans">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </li>
-            <li class="block-question">
-              <p class="question">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p class="ans">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </li>
-            <li class="block-question">
-              <p class="question">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p class="ans">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </li>
-            <li class="block-question">
-              <p class="question">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p class="ans">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </li>
-            <li class="block-question">
-              <p class="question">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p class="ans">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </li>
-
-
-
-
-            
+                <?if(!empty($arSupport)):?>
+                    <?foreach($arSupport as $support):?>
+                            <li class="block-question">
+                              <p class="question"><?=$support['title'];?></p>
+                              <p class="ans"><?=$support['text'];?></p>
+                            </li>
+                    <?endforeach;?>
+                <?else:?>   
+                  <p>Вопросов пока нет</p> 
+                <?endif;?>
           </ul>
-
- </div>
-    
+ </div>   
