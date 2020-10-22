@@ -3,7 +3,7 @@
 /**
  * Подключает шаблон с параметрами
  */
-function renderTemplate($name, $data = [])
+function renderTemplate($name, $data = []) //всегда возвращает html-код
 {
     $result = ''; // Подготавлием результат. По умолчанию он пустой.
 

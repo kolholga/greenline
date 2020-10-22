@@ -16,6 +16,9 @@
                               <p class="ans"><?=$support['text'];?></p>
                             </li>
                     <?endforeach;?>
+
+                    <?= $navigation; ?>
+
                 <?else:?>   
                   <p>Вопросов пока нет</p> 
                 <?endif;?>

@@ -6,12 +6,44 @@ require_once 'core/init.php'; //подключаем файл init.php
 
 $title = 'Поддержка';
 
-$res = mysqli_query($link, "SELECT `title`, `text` FROM `support` LIMIT 0, 3");
+$num = 3; // оличество новостей на странице
+
+$resTotal = mysqli_query($link, "SELECT * FROM `support`"); //
+$total = mysqli_num_rows($resTotal); //Количество записей в запросе
+
+$totalStr = ceil($total/$num); // Общее число страниц
+//ceil - функция округляет в большую сторону
+
+$page = intval($_GET['page']); // Получение номера страницы из адресной строки (из массива GET)
+                                // intval - переводит в число (приводит к числу)
+if($page <= 0){
+    $page = 1; //сли номер страницы не существует или отрицательный
+}elseif ($page > $totalStr){
+    $page = $totalStr; //если номер страницы больше чем их количество
+}
+
+$offset = $page * $num - $num; //смещение - определяем с какой новости начинать
+
+$arPage = range(1, $totalStr); //Массив со страницами [1,2,3,4,...]
+          //range — Создает массив, содержащий диапазон элементов
+
+$res = mysqli_query($link, "SELECT `title`, `text` FROM `support` LIMIT $offset, $num");
 $arSupport = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
 
-$page_content = renderTemplate("support", [
-                             'arSupport' => $arSupport
+
+/////////////////////////////////////////////////////////////
+//сборка страниц:
+
+$pageNavigation = renderTemplate('navigation', [ //Получаем html-код шаблона навигации
+                                'arPage' => $arPage, //Передаем массив со страницами
+                                'totalPage' => $totalStr, //передаем количество страниц
+                                'curPage' => $page //передаем текущую страницу
+                                 ]);
+            
+$page_content = renderTemplate('support', [
+                             'arSupport' => $arSupport,
+                             'navigation' => $pageNavigation //передаем полученный html-код навигации
                             ]);
 
 $result = renderTemplate('layout', [
