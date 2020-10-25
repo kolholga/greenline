@@ -23,9 +23,32 @@ function renderTemplate($name, $data = []) //всегда возвращает h
 }
 
 
-/* функция для форматированного вывода массива */
-function pr($arr){
+/**
+ * функция для форматированного вывода массива
+ */
+function pr($arr)
+{
     echo '<pre>';
     print_r($arr);
     echo '</pre>';
+}
+
+/**
+* Функция добавления параметра в адресную строку
+ */
+function setPageParam($param, $value)
+{
+    $qParam = $_SERVER['QUERY_STRING']; // получаем строку с параметрами
+    parse_str($qParam, $arr); // (парсим) генерируем массив из этой строки
+                                    //parse_str - разбирает строку в переменные => возвращает массив во второй свой параметр
+   if(!empty($param) && !empty($value)) { //если переданы параметры
+        if(array_key_exists($param, $arr)){ //если есть такой ключ в массиве
+                                            //array_key_exists - проверяет наличие того или иного ключа
+            $arr[$param] = $value; // меняем значение в полученном массиве, если ключ найден
+        }else{
+            $arr[$param] = $value;
+        }
+   }
+   return http_build_query($arr); //вернет сгенерированную строку
+                                 // http_build_query - генерирует строку с GET-параметрами
 }
