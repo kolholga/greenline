@@ -14,10 +14,10 @@
     <div class="header_resize">
       <div class="menu_nav">
         <ul>
-          <li class="active"><a href="index.php">Главная</a></li>
-          <li><a href="support.php">Поддержка</a></li>
-          <li><a href="about.php">О нас</a></li>
-          <li><a href="contact.php">Контакты</a></li>
+          <li <?if($menuActive == 'main'):?>class="active"<?endif;?>><a href="index.php">Главная</a></li>
+          <li <?if($menuActive == 'support'):?>class="active"<?endif;?>><a href="support.php">Поддержка</a></li>
+          <li <?if($menuActive == 'about'):?>class="active"<?endif;?>><a href="about.php">О нас</a></li>
+          <li <?if($menuActive == 'contact'):?>class="active"<?endif;?>><a href="contact.php">Контакты</a></li>
         </ul>
       </div>
       <div class="logo">

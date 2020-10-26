@@ -64,7 +64,8 @@ $page_content = renderTemplate('support', [
 $result = renderTemplate('layout', [
                         'content' => $page_content,
                          'title' => $title,
-                         'arCategory' => $arCategory
+                         'arCategory' => $arCategory,
+                         'menuActive' => 'support'
                         ]);
 
 echo $result;
