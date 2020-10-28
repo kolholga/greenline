@@ -32,6 +32,7 @@ $stmt = mysqli_prepare($link, "SELECT * FROM `news` WHERE `author` = ? AND `id` 
 mysqli_stmt_bind_param($stmt, "siii", $author, $id, $offset, $num);
 */
 
+/*
 $stmt = mysqli_prepare($link, "SELECT * FROM `category` WHERE `title` = ?");// Подготавливает запрос. Возвращает указатель на запрос
 
 mysqli_stmt_bind_param($stmt, "s", $title); // Привязывает переменные к параметрам запроса
@@ -41,8 +42,16 @@ mysqli_stmt_execute($stmt); //  Выполняет собранный(подго
 
 $res = mysqli_stmt_get_result($stmt); // Получает результат запроса
         // mysqli_stmt_get_result() - Получает результат запроса
+*/
 
-while ($arRes = mysqli_fetch_all($res)){
+$nD = '1';
+$stmt = mysqli_prepare($link, "SELECT `author`, `text` FROM `comments` WHERE `news_id` = ?");
+mysqli_stmt_bind_param($stmt, "s", $nD);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+
+
+while ($arRes = mysqli_fetch_assoc($res)){
     pr($arRes);
 }
 
@@ -50,7 +59,85 @@ while ($arRes = mysqli_fetch_all($res)){
 // 1. Написать в функцию function getWeekDay(). принимает номер дня недели от 0 до 7, где 0-воскресенье, 7- суббота, а возвращает название этого дня недели на рус яз
 // 2. в support все запросы mysqli_query перевести в mysqli_prepare
 
+/*
+function getWeekDay($numDay){
+        if($numDay == 0){
+                return 'Воскресенье';
+        }
+        elseif($numDay == 1){
+                return 'Понедельник';
+        }
+        elseif($numDay == 2){
+                return 'Вторник';
+        }
+        elseif($numDay == 3){
+                return 'Среда';
+        }
+        elseif($numDay == 4){
+                return 'Четверг';
+        }
+        elseif($numDay == 5){
+                return 'Пятница';
+        }
+        elseif($numDay == 6){
+                return 'Суббота';
+        }else{
+                return 'Нет такого дня недели'; 
+        }
+}
+
+echo getWeekDay(1);
+*/
+
+/*
+function getWeekDay($numDay){
+        switch ($numDay){
+                case 0:
+                        echo "Воскресенье";
+                        break;
+                case 1:
+                        echo "Понедельник";
+                        break;   
+                case 2:
+                        echo "Вторник";
+                        break;
+                case 3:
+                        echo "Среда";
+                        break;
+                case 4:
+                        echo "Четверг";
+                        break;
+                case 5:
+                        echo "Пятница";
+                        break;
+                case 6:
+                        echo "Суббота";
+                        break;
+                default:
+                        echo "Нет такого дня недели";
+                    
+        }
+}
+
+getWeekDay(5);
+*/
+
+/*
+function ggggg($h){
+        if($h >= 0 && $h <= 12){
+                echo "Время до полудня";
+        }elseif($h > 12 && $h <= 24){
+                echo "Время после полудня";
+        }else {
+                echo "Не верное значение времени";  
+        }
+}
+
+ggggg(42);
+*/
 ?>
+
+
 
 
 

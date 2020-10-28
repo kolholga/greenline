@@ -9,7 +9,10 @@ $title = 'Поддержка';
 
 $num = 3; // оличество новостей на странице
 
-$resTotal = mysqli_query($link, "SELECT * FROM `support`"); //
+$stmt = mysqli_prepare($link, "SELECT * FROM `support`"); //// Подготавливает запрос. Возвращает указатель на запрос
+mysqli_stmt_execute($stmt);//Выполняет подготовленный запрос/отправляет данные
+$resTotal = mysqli_stmt_get_result($stmt);// Получает результат запроса
+
 $total = mysqli_num_rows($resTotal); //Количество записей в запросе
 
 $totalStr = ceil($total/$num); // Общее число страниц
@@ -40,9 +43,13 @@ if($page < $totalStr){ //если мы не находимся на послед
 
 $is_nav = ($totalStr > 1) ? true : false; //если количество страниц > 1, то true, иначе false (короткая запись)
 
-$res = mysqli_query($link, "SELECT `title`, `text` FROM `support` LIMIT $offset, $num");
-$arSupport = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$stmt = mysqli_prepare($link, "SELECT `title`, `text` FROM `support` LIMIT ?, ?");
+mysqli_stmt_bind_param($stmt, "ii", $offset, $num);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
 
+
+$arSupport = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
 /////////////////////////////////////////////////////////////
 //сборка страниц:
