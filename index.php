@@ -7,7 +7,7 @@ require_once 'core/init.php'; //подключаем файл init.php
 /* $arCategory - список категорий для Layout */
 
 $title = 'Главная страница';
-$num = 3; // оличество новостей на странице
+$num = 3; // Количество новостей на странице
 
 /**
  * Фильтрация по категориям
@@ -16,11 +16,17 @@ $where = '';
 if(isset($_GET['category'])){
     $category = intval($_GET['category']); //эта переменная либо 0, либо число (привели к числу с помощью intval)
     if($category > 0){ //если пользователь ничего не менял, то есть число > 0
-        $where = 'WHERE `category_id` = ' . $category; //
+        $where = 'WHERE `category_id` = ?'; //
     }
 }
 
-$resTotal = mysqli_query($link, "SELECT * FROM `news` $where"); //
+// Если есть WHERE условие и выбрана категория
+if($where != '' && isset($category)){
+    $resTotal = getStmtResult($link, "SELECT * FROM `news` $where", [$category]);
+}else{
+    $resTotal = getStmtResult($link, "SELECT * FROM `news`");
+}
+
 $total = mysqli_num_rows($resTotal); //Количество записей в запросе
 
 $totalStr = ceil($total/$num); // Общее число страниц
@@ -57,8 +63,17 @@ if($page < $totalStr){ //если мы не находимся на послед
 
 $is_nav = ($totalStr > 1) ? true : false; //если количество страниц > 1, то true, иначе false (короткая запись)
 
-$res = mysqli_query($link, "SELECT n.`id`, n.`title`, n.`preview_text`, n.`date`, n.`image`, n.`comments_cnt`, c.`title` AS news_cat " .
-    " FROM `news` n JOIN `category` c ON c.`id` = n.`category_id` $where ORDER BY n.`id` LIMIT $offset, $num");
+$query = "SELECT n.`id`, n.`title`, n.`preview_text`, n.`date`, n.`image`, n.`comments_cnt`, c.`title` AS news_cat " .
+    " FROM `news` n JOIN `category` c ON c.`id` = n.`category_id` $where ORDER BY n.`id` LIMIT ?, ?";
+
+// В зависимости от наличия условий (3 или 2 условия) подготавливаем параметры
+if($where != '' && isset($category)){
+    $param = [$category, $offset, $num];
+}else{
+    $param = [$offset, $num];
+}
+
+$res = getStmtResult($link, $query, $param);
 $arNews = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
 /////////////////////////////////////////////////////

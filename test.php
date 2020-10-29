@@ -44,13 +44,15 @@ $res = mysqli_stmt_get_result($stmt); // Получает результат з�
         // mysqli_stmt_get_result() - Получает результат запроса
 */
 
+/*
 $nD = '1';
 $stmt = mysqli_prepare($link, "SELECT `author`, `text` FROM `comments` WHERE `news_id` = ?");
 mysqli_stmt_bind_param($stmt, "s", $nD);
 mysqli_stmt_execute($stmt);
 $res = mysqli_stmt_get_result($stmt);
+*/
 
-
+$res = getStmtResult($link, "SELECT * FROM `category`");
 while ($arRes = mysqli_fetch_assoc($res)){
     pr($arRes);
 }
@@ -199,3 +201,7 @@ ggggg(42);
 4. Добавляем фильтрацию  (условие) в запрос на выборку новостей
 */
 ?>
+
+
+// переделать саппорт в функцию
+эбаут в базе данных с полем

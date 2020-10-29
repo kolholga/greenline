@@ -9,7 +9,7 @@ $title = 'Поддержка';
 
 $num = 3; // оличество новостей на странице
 
-$stmt = mysqli_prepare($link, "SELECT * FROM `support`"); //// Подготавливает запрос. Возвращает указатель на запрос
+$stmt = mysqli_prepare($link, "SELECT * FROM `support`"); // Подготавливает запрос. Возвращает указатель на запрос
 mysqli_stmt_execute($stmt);//Выполняет подготовленный запрос/отправляет данные
 $resTotal = mysqli_stmt_get_result($stmt);// Получает результат запроса
 
@@ -43,10 +43,10 @@ if($page < $totalStr){ //если мы не находимся на послед
 
 $is_nav = ($totalStr > 1) ? true : false; //если количество страниц > 1, то true, иначе false (короткая запись)
 
-$stmt = mysqli_prepare($link, "SELECT `title`, `text` FROM `support` LIMIT ?, ?");
-mysqli_stmt_bind_param($stmt, "ii", $offset, $num);
-mysqli_stmt_execute($stmt);
-$res = mysqli_stmt_get_result($stmt);
+$stmt = mysqli_prepare($link, "SELECT `title`, `text` FROM `support` LIMIT ?, ?"); // Подготавливает запрос. Возвращает указатель на запрос
+mysqli_stmt_bind_param($stmt, "ii", $offset, $num); // Привязывает переменные к параметрам запроса
+mysqli_stmt_execute($stmt); //Выполняет подготовленный запрос/отправляет данные
+$res = mysqli_stmt_get_result($stmt); // Получает результат запроса
 
 
 $arSupport = mysqli_fetch_all($res, MYSQLI_ASSOC);
