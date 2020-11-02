@@ -63,8 +63,9 @@ if($page < $totalStr){ //если мы не находимся на послед
 
 $is_nav = ($totalStr > 1) ? true : false; //если количество страниц > 1, то true, иначе false (короткая запись)
 
-$query = "SELECT n.`id`, n.`title`, n.`preview_text`, n.`date`, n.`image`, n.`comments_cnt`, c.`title` AS news_cat " .
-    " FROM `news` n JOIN `category` c ON c.`id` = n.`category_id` $where ORDER BY n.`id` LIMIT ?, ?";
+$query = "SELECT n.`id`, n.`title`, n.`preview_text`, DATE_FORMAT(n.`date`, '%d.%m.%Y %H:%i') AS news_date, n.`image`, n.`comments_cnt`, c.`title` AS news_cat " .
+         " FROM `news` n JOIN `category` c ON c.`id` = n.`category_id` $where ORDER BY n.`id` LIMIT ?, ?";
+               //DATE_FORMAT(date,format) - Форматирует величину date в соответствии со строкой format. //'%d.%m.%Y %H:%i' - шаблон даты и времени
 
 // В зависимости от наличия условий (3 или 2 условия) подготавливаем параметры
 if($where != '' && isset($category)){

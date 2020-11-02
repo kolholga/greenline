@@ -6,19 +6,27 @@ require_once 'core/init.php'; //подключаем файл init.php
 $id = intval($_GET['id']);
 $title = 'Новость';
 
-$query = "SELECT n.`id`, n.`title`, n.`detail_text`, n.`date`, n.`image`, n.`comments_cnt`, c.`title` AS news_cat " .
+$query = "SELECT n.`id`, n.`title`, n.`detail_text`, DATE_FORMAT(n.`date`, '%d.%m.%Y %H:%i') AS date_detail, n.`image`, n.`comments_cnt`, c.`title` AS news_cat " .
     " FROM `news` n JOIN `category` c ON c.`id` = n.`category_id` WHERE n.`id` = ? LIMIT ?";
 
 $res = getStmtResult($link, $query, [$id, 1]);
 
 $arNewsDetail = mysqli_fetch_assoc($res);
 
+$resComment = getStmtResult($link, "SELECT * FROM `comments` WHERE `news_id` = ?", [$id]);
+$arComments = mysqli_fetch_all($resComment, MYSQLI_ASSOC); // Получаем комментарии текущей новости
 
 
 /////////////////////////////////////////////////
+//сборка страниц:
+
+$comments = renderTemplate('comments', [ // Получаем шаблон комментариев
+                            'arComments' => $arComments // Передаем массив в шаблон комментариев
+]);
 
 $page_content = renderTemplate("news_detail", [ // Получаем html-код блока(шаблона) news_detail
                                 'arNews' => $arNewsDetail, // передаем массив с новостью, полученной из базы данных
+                                'comments' => $comments // Передаем готовый html - код комментариев
 ]);
 
 
