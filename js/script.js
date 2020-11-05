@@ -12,7 +12,19 @@ $(document).ready(function () { //скрипт выполнится, когда 
                 url: '/ajax/comments_ajax.php',
                 data: $("#form").serialize(), //собирает в кучу (в этой строке data - это один из параметров ajax-запроса)
                 success: function (data) { //data - что возвращает (в этой строке data - это данные, которые возвращаются с '/ajax/comments_ajax.php')
-                    console.log(data);
+                    //$("#comments").html(data);
+                    let d = JSON.parse(data); // JSON.parse - Преобразует json в объект
+                    //console.log(d);
+
+
+                    $("#comments").html(d.comments);
+                    $("#cc").html(d.cc);
+                    name.val(''); // очищаем поля формы
+                    email.val('');
+                    message.val('');
+                    //let  cc = $("#cc").html(); //Получаем колличество комментариев из строки <span>
+                    //let newCc = parseInt(cc) + 1; //Увеличиваем на 1
+                    //$("#cc").html(newCc); // Перезаписываем <span>
                 }
             });
         } else {

@@ -1,4 +1,4 @@
-<div class="article">
+<div class="article" xmlns="http://www.w3.org/1999/html">
     <h2><?=$arNews['title']?></h2>
     <div class="clr"></div>
     <p>Автор <a href="#">Admin</a> <span>&nbsp;&bull;&nbsp;</span> Категории <a href="#"><?=$arNews['news_cat']?></a>
@@ -8,24 +8,31 @@
         <?=$arNews['detail_text']?>
     </p>
 
-    <p>Tagged: 
-        <? if (!empty($arTag)): ?>
-            <? foreach ($arTag as $tags): ?>
-                <a href="#"><?=$tags['tag']?></a>
+    <? if (!empty($arTags)): ?>
+        <p>Tagged:
+            <?
+            $cntTags = count($arTags);
+            $c = 1;
+            ?>
+            <? foreach ($arTags as $tag): ?>
+                <a href="/?tag=<?=$tag['tag']?>"><?= $tag['tag'] ?></a><? if ($c < $cntTags): ?>, <? endif; ?> <?//убрать запятую в конце?>
+                <?
+                $c++;
+                ?>
             <? endforeach; ?>
-        <? else: ?>
-            <p>Тегов нет</p>
-        <? endif; ?>
-            <!-- <a href="#">varius</a>, 
+            <!-- <a href="#">varius</a>,
             <a href="#">turpis</a> -->
-    </p>
+        </p>
+    <? else: ?>
+        <p>Тегов нет</p>
+    <? endif; ?>
 
-    <p><a href="#"><strong>Comments (<?=$arNews['comments_cnt']?>)</strong></a> <span>&nbsp;&bull;&nbsp;</span> <?=$arNews['date_detail']?>
+    <p><a href="#"><strong>Комментарии (<span id="cc"><?=$arNews['comments_cnt']?></span>)</strong></a> <span>&nbsp;&bull;&nbsp;</span> <?=$arNews['date_detail']?>
         <span>&nbsp;&bull;&nbsp;</span> <a href="#"><strong>Edit</strong></a></p>
 </div>
 <div class="article">
     <h2> Комментарии к новости </h2>
-    <?=$comments?>
+    <div id="comments"><?=$comments?></div>
 </div>
 
 <div class="article">

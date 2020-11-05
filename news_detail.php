@@ -13,12 +13,11 @@ $res = getStmtResult($link, $query, [$id, 1]);
 
 $arNewsDetail = mysqli_fetch_assoc($res);
 
-$resComment = getStmtResult($link, "SELECT * FROM `comments` WHERE `news_id` = ?", [$id]);
+$resComment = getStmtResult($link, "SELECT * FROM `comments` WHERE `news_id` = ?", [$id]); //active - для модерации /  AND `active` = ?
 $arComments = mysqli_fetch_all($resComment, MYSQLI_ASSOC); // Получаем комментарии текущей новости
 
-$resTag = getStmtResult($link, "SELECT * FROM `tags` t  JOIN `news` n  ON n.`id` = t.`news_id` WHERE n.`id` = ? ", [$id]);
-$arTag = mysqli_fetch_all($resTag, MYSQLI_ASSOC);
-
+$resTags = getStmtResult($link, "SELECT * FROM `tags` WHERE `news_id` = ? ", [$id]);
+$arTags = mysqli_fetch_all($resTags, MYSQLI_ASSOC);
 
 
 /////////////////////////////////////////////////
@@ -31,7 +30,7 @@ $comments = renderTemplate('comments', [ // Получаем шаблон ком
 $page_content = renderTemplate("news_detail", [ // Получаем html-код блока(шаблона) news_detail
                                 'arNews' => $arNewsDetail, // передаем массив с новостью, полученной из базы данных
                                 'comments' => $comments, // Передаем готовый html - код комментариев
-                                'arTag' => $arTag
+                                'arTags' => $arTags // Передаем мвссив с тегами новости
 ]);
 
 
