@@ -7,8 +7,19 @@
     <p>
         <?=$arNews['detail_text']?>
     </p>
-    <p>Tagged: <a href="#">orci</a>, <a href="#">lectus</a>, <a href="#">varius</a>, <a
-                href="#">turpis</a></p>
+
+    <p>Tagged: 
+        <? if (!empty($arTag)): ?>
+            <? foreach ($arTag as $tags): ?>
+                <a href="#"><?=$tags['tag']?></a>
+            <? endforeach; ?>
+        <? else: ?>
+            <p>Тегов нет</p>
+        <? endif; ?>
+            <!-- <a href="#">varius</a>, 
+            <a href="#">turpis</a> -->
+    </p>
+
     <p><a href="#"><strong>Comments (<?=$arNews['comments_cnt']?>)</strong></a> <span>&nbsp;&bull;&nbsp;</span> <?=$arNews['date_detail']?>
         <span>&nbsp;&bull;&nbsp;</span> <a href="#"><strong>Edit</strong></a></p>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'core/init.php'; //подключаем файл init.php
-//echo $_SERVER['DOCUMENT_ROOT']; // вывнедет путь E:/OpenServer/domains/greenline
+//echo $_SERVER['DOCUMENT_ROOT']; // выведет путь E:/OpenServer/domains/greenline
 
 $id = intval($_GET['id']);
 $title = 'Новость';
@@ -16,6 +16,10 @@ $arNewsDetail = mysqli_fetch_assoc($res);
 $resComment = getStmtResult($link, "SELECT * FROM `comments` WHERE `news_id` = ?", [$id]);
 $arComments = mysqli_fetch_all($resComment, MYSQLI_ASSOC); // Получаем комментарии текущей новости
 
+$resTag = getStmtResult($link, "SELECT * FROM `tags` t  JOIN `news` n  ON n.`id` = t.`news_id` WHERE n.`id` = ? ", [$id]);
+$arTag = mysqli_fetch_all($resTag, MYSQLI_ASSOC);
+
+
 
 /////////////////////////////////////////////////
 //сборка страниц:
@@ -26,7 +30,8 @@ $comments = renderTemplate('comments', [ // Получаем шаблон ком
 
 $page_content = renderTemplate("news_detail", [ // Получаем html-код блока(шаблона) news_detail
                                 'arNews' => $arNewsDetail, // передаем массив с новостью, полученной из базы данных
-                                'comments' => $comments // Передаем готовый html - код комментариев
+                                'comments' => $comments, // Передаем готовый html - код комментариев
+                                'arTag' => $arTag
 ]);
 
 
