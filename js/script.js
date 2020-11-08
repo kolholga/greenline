@@ -35,4 +35,29 @@ $(document).ready(function () { //скрипт выполнится, когда 
     $("input, textarea").focus(function () { // Очищаем ошибки
         $("#form_error").html('');
     });
+
+    $("#subscribe").click(function (){ // слушает, когда произойдет клик по кнопку "Подписаться" c id="subscribe"
+         //console.log(222);
+         let subscribeEmail = $("#subscribe_email");
+         //console.log(email.val());
+
+         if(subscribeEmail.val() != ''){
+            console.log($("#subscribeForm").serialize());
+            $.ajax({ // ajax-запрос - отравляет данные по пути '/ajax/subscribe_ajax.php' методом post
+                type: 'post',
+                url: '/ajax/subscribe_ajax.php',
+                data: $("#subscribeForm").serialize(),
+                success: function (data) { //data - что возвращает (в этой строке data - это данные, которые возвращаются с '/ajax/comments_ajax.php')
+                    
+                    console.log(data);
+                }
+             });
+        }else{
+            $("#subscribe_error").html('Введите ваш email');
+         }
+    });
+
+    $("input").focus(function () { // Очищаем ошибки
+        $("#subscribe_error").html('');
+    });
 });

@@ -80,9 +80,11 @@
                     На сайте представлена подборка самых свежих новостей науки, медицины, современных технологий и
                     многого другого. Вы можете подписаться на нашу рассылку, чтобы всегда быть в курсе.</p>
                 <div>
-                    <form class="subscribe">
-                        <input type="email" name="email" placeholder="Ваш email"/>
-                        <input type="submit" class="button" value="Подписаться"/>
+                    <div class="error" id="subscribe_error"></div>
+                    <form action="#" class="subscribe" method="post" id="subscribeForm">
+                        <input type="email" id="subscribe_email" name="email" placeholder="Ваш email"/>
+                        <input type="button" id="subscribe" class="button" value="Подписаться"/>
+                        
                     </form>
                 </div>
             </div>
