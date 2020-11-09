@@ -1,7 +1,58 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/core/init.php';
+// ЗАРЕГИСТРИРОВАТЬСЯ - Бесплатный хостинг: https://beget.com/ru/free-hosting
+pr($_FILES);
+/*
+ Array
+(
+    [user_file] => Array
+        (
+            [name] => pix2.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\OpenServer\userdata\php_upload\php9D11.tmp
+            [error] => 0  -  Объяснение сообщений об ошибках: https://www.php.net/manual/ru/features.file-upload.errors.php
+            [size] => 2025
+        )
 
+)
+*/
+// ПОЧИТАТЬ - Загрузка файлов методом POST: https://www.php.net/manual/ru/features.file-upload.post-method.php
+
+if(!empty($_FILES['user_file']['error'])) {
+    foreach ($_FILES['user_file']['error'] as $k => $val) {
+        if ($val == 0) {
+            $upload = $_SERVER['DOCUMENT_ROOT'] . '/upload/'; // Путь к папке с загрузками
+            $arName = explode('.', $_FILES['user_file']['name'][$k]); // Разбивает имя файла по точке
+            $name = $arName[0] . '_' . time() . '.' . $arName[1]; //Составляем новое имя для файла с использованием метки времени
+            move_uploaded_file($_FILES['user_file']['tmp_name'][$k], $upload . $name);
+        }
+    }
+}
+/*
+if($_FILES['user_file']['error'] == 0) {
+    $upload = $_SERVER['DOCUMENT_ROOT'] . '/upload/'; // Путь к папке с загрузками
+    $arName = explode('.', $_FILES['user_file']['name']); // Разбивает имя файла по точке
+    $name = $arName[0] . '_' . time() . '.' . $arName[1]; //Составляем новое имя для файла с использованием метки времени
+    move_uploaded_file($_FILES['user_file']['tmp_name'], $upload . $name);
+              //move_uploaded_file — Перемещает загруженный файл в новое место (откуда взять куда положить): https://www.php.net/manual/ru/function.move-uploaded-file.php
+}
+*/
+?>
+<!-- Форма для загрузки файлов -->
+<form method="post" enctype="multipart/form-data">
+    <!-- <input type="hidden" name="MAX_FILE_SIZE" value="30000"> -->
+    <input type="file" name="user_file[]" /><br>
+    <input type="file" name="user_file[]" /><br>
+    <input type="file" name="user_file[]" /><br>
+    <input type="file" name="user_file[]" /><br>
+    <input type="submit" value="Загрузить" />
+</form>
+
+
+
+
+<?php
 //работа с дополненными запросами:
 /*
 1. Сформировать запрос с плейсхолдерами (?)
@@ -25,8 +76,8 @@ mysqli_stmt_bind_param($stmt, "i", $_GET['id']); // Привязывает пе�
 */
 
 //$author = $_GET['author'];
-$cat = $_GET['category'];
-$title = 'Технологии';
+//$cat = $_GET['category'];
+//$title = 'Технологии';
 /*
 $stmt = mysqli_prepare($link, "SELECT * FROM `news` WHERE `author` = ? AND `id` = ? LIMIT ?, ?");
 mysqli_stmt_bind_param($stmt, "siii", $author, $id, $offset, $num);
@@ -51,12 +102,12 @@ mysqli_stmt_bind_param($stmt, "s", $nD);
 mysqli_stmt_execute($stmt);
 $res = mysqli_stmt_get_result($stmt);
 */
-
+/*
 $res = getStmtResult($link, "SELECT * FROM `category`");
 while ($arRes = mysqli_fetch_assoc($res)){
     pr($arRes);
 }
-
+*/
 // 26/10/2020
 // 1. Написать в функцию function getWeekDay(). принимает номер дня недели от 0 до 7, где 0-воскресенье, 7- суббота, а возвращает название этого дня недели на рус яз
 // 2. в support все запросы mysqli_query перевести в mysqli_prepare
@@ -139,10 +190,6 @@ ggggg(42);
 */
 ?>
 
-
-
-
-
 <?php
 //
 //пагинация - постраничный вывод данных
@@ -205,3 +252,16 @@ ggggg(42);
 
 <?// переделать саппорт в функцию
 //эбаут в базе данных с полем?>
+
+<?php
+//д.з. от 09/11/2020
+// создать форму добавления новости
+// разместить ее в templates/admin.php
+// принять данные из формы
+//проверить чтобы обязателные поля были заполнены
+// дата NOW()
+//разместить новость в базе данных, дата NOW(), поле comments_cnt не заполнять
+//с помощью mysqli_insert_id проверить добавленные записи
+// вывести сообщение об удачном добавлении новости
+// вся логика в корневом admin
+?>

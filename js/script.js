@@ -38,6 +38,8 @@ $(document).ready(function () { //скрипт выполнится, когда 
     });
 
     $("#send_subscribe").click(function (){ // слушает, когда произойдет клик по кнопку "Подписаться" c id="subscribe"
+
+
          //console.log(222);
          let emailSubscribe = $("#email_subscribe");
          //console.log(email.val());

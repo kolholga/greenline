@@ -16,11 +16,6 @@
             <div class="menu_nav">
                 <ul>
                     <li <? if ($menuActive == 'main'): ?>class="active"<? endif; ?>><a href="index.php">Главная</a></li>
-                    <li <? if ($menuActive == 'support'): ?>class="active"<? endif; ?>><a
-                                href="support.php">Поддержка</a></li>
-                    <li <? if ($menuActive == 'about'): ?>class="active"<? endif; ?>><a href="about.php">О нас</a></li>
-                    <li <? if ($menuActive == 'contact'): ?>class="active"<? endif; ?>><a
-                                href="contact.php">Контакты</a></li>
                 </ul>
             </div>
             <div class="logo">
@@ -35,30 +30,6 @@
                 <?= $content; ?>
 
 
-            </div>
-            <div class="sidebar">
-                <div class="searchform">
-                    <form id="formsearch" name="formsearch" method="post" action="#">
-            <span>
-            <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80"
-                   value="Поиск по сайту:" type="text"/>
-            </span>
-                        <input name="button_search" src="images/search_btn.gif" class="button_search" type="image"/>
-                    </form>
-                </div>
-                <div class="gadget">
-                    <h2 class="star"><span>Категории</span></h2>
-                    <div class="clr"></div>
-                    <ul class="sb_menu">
-
-                        <? foreach ($arCategory as $category): ?>
-                            <li>
-                                <a href="?<?= setPageParam('category', $category['id']); ?>"><?= $category['title']; ?></a>
-                            </li> <? //category - это созданный параметр для фильтрации (сами придумали)?>
-                        <? endforeach; ?>
-
-                    </ul>
-                </div>
             </div>
             <div class="clr"></div>
         </div>
