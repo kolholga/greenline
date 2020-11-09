@@ -7,6 +7,7 @@ $(document).ready(function () { //скрипт выполнится, когда 
 
 
         if (name.val() != '' && email.val() != '' && message.val != '') { //Все поля должны быть заполнены
+            console.log($("#form").serialize());
             $.ajax({ // ajax-запрос - отравляет данные по пути '/ajax/comments_ajax.php' методом post
                 type: 'post',
                 url: '/ajax/comments_ajax.php',
@@ -36,20 +37,22 @@ $(document).ready(function () { //скрипт выполнится, когда 
         $("#form_error").html('');
     });
 
-    $("#subscribe").click(function (){ // слушает, когда произойдет клик по кнопку "Подписаться" c id="subscribe"
+    $("#send_subscribe").click(function (){ // слушает, когда произойдет клик по кнопку "Подписаться" c id="subscribe"
          //console.log(222);
-         let subscribeEmail = $("#subscribe_email");
+         let emailSubscribe = $("#email_subscribe");
          //console.log(email.val());
 
-         if(subscribeEmail.val() != ''){
-            console.log($("#subscribeForm").serialize());
+         if(emailSubscribe.val() != ''){
+            //console.log($("#form_subscribe").serialize());
             $.ajax({ // ajax-запрос - отравляет данные по пути '/ajax/subscribe_ajax.php' методом post
                 type: 'post',
                 url: '/ajax/subscribe_ajax.php',
-                data: $("#subscribeForm").serialize(),
+                data: $("#form_subscribe").serialize(),
                 success: function (data) { //data - что возвращает (в этой строке data - это данные, которые возвращаются с '/ajax/comments_ajax.php')
-                    
-                    console.log(data);
+                    //console.log(data);
+                    $("#subscribe_error").html(data);
+                    //$("#subscribe_error").style.color = 'green';
+                    emailSubscribe.val('');
                 }
              });
         }else{

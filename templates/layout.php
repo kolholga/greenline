@@ -81,9 +81,11 @@
                     многого другого. Вы можете подписаться на нашу рассылку, чтобы всегда быть в курсе.</p>
                 <div>
                     <div class="error" id="subscribe_error"></div>
-                    <form action="#" class="subscribe" method="post" id="subscribeForm">
-                        <input type="email" id="subscribe_email" name="email" placeholder="Ваш email"/>
-                        <input type="button" id="subscribe" class="button" value="Подписаться"/>
+                    <form  class="subscribe" id="form_subscribe">
+                    <!-- <input id="name" name="name" class="text"/>
+                    <input type="email" id="nemail" mame="nemail" /> -->
+                        <input type="text" id="email_subscribe" name="email_subscribe" placeholder="Ваш email"/>
+                        <input type="button" name="subscribe" id="send_subscribe" class="button" value="Подписаться"/>
                         
                     </form>
                 </div>
