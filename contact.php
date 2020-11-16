@@ -19,6 +19,9 @@ if(!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['phone']) 
     $text .= 'Email: ' . $email . PHP_EOL;
     $text .= 'Телефон: ' . $phone . PHP_EOL;
     $text .= 'Сообщение: ' . $message . PHP_EOL;
+
+    mail($to, $subject, $message);
+    //https://www.php.net/manual/ru/function.mail.php
 }
 
 $page_content = renderTemplate("contact");
